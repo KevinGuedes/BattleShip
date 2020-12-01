@@ -10,6 +10,7 @@ import entidades.NavioTanque;
 import entidades.PortaAviao;
 import entidades.Ataque;
 import entidades.Contratorpedeiro;
+import entidades.Jogador;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -52,71 +53,62 @@ public class Principal {
 	    tabuleiro1.Mostra();
 	    tabuleiro2.Mostra();
 	
-	
 	    //Pontuação
-	    int pontosPlayer1 = 0;
 	    int pontosParaGanhar = 0;
-	    int pontosPlayer2 = 0;
 	    for(Navio navio : navios) {
 			pontosParaGanhar += navio.getComprimentoNavio();
 		}
 	    
-	    //Ataques
-	    ArrayList<Ataque> AtaquesPlayer1 = new ArrayList<Ataque>();
-	    ArrayList<Ataque> AtaquesPlayer2 = new ArrayList<Ataque>();
-	    
+	    //Inicialização do jogo
 	    int rodadas = 0;
-	    
 	    boolean fimDeJogo;
+	    Jogador Player1 = new Jogador();
+	    Jogador Player2 = new Jogador();
+
 	    do {
+	    	rodadas++;
 	    	//Ataques Player 1
-		    boolean verificadorPlayer1;
 		    Ataque ataquePlayer1;
 		    
 		    do {
-		    	verificadorPlayer1 = false;
 		    	ataquePlayer1 = new Ataque(random.nextInt(linhas), random.nextInt(colunas));
-			    if(!AtaquesPlayer1.contains(ataquePlayer1)) {
-			    	AtaquesPlayer1.add(ataquePlayer1);
-			    }
-			    else {
-			    	verificadorPlayer1 = true;
-			    }
-		    } while (verificadorPlayer1);
+		    } while (!Player1.ValidarAtaque(ataquePlayer1));
+		    
+		    
+		    Player1.AdicionarAtaqueTotal(ataquePlayer1);
+		    
 		    if(tabuleiro2.ProcessarAtaque(ataquePlayer1)) {
 		    	System.out.println("Player 1: Ataque bem sucedido!");
-		    	pontosPlayer1++;
+		    	Player1.AdicionarPonto();
+		    	Player1.AdicionarAtaqueBemSucedido(ataquePlayer1);
 		    }
 		    else {
 		    	System.out.println("Player 1: Ataque mal sucedido, tente outra posição!");
+		    	Player1.AdicionarAtaqueMalSucedido(ataquePlayer1);
 		    }
 		    
-		    
-		    
 		    //Ataques Player 2
-		    boolean verificadorPlayer2;
 		    Ataque ataquePlayer2;
 		    
 		    do {
-		    	verificadorPlayer2 = false;
 		    	ataquePlayer2 = new Ataque(random.nextInt(linhas), random.nextInt(colunas));
-			    if(!AtaquesPlayer2.contains(ataquePlayer2)) {
-			    	AtaquesPlayer2.add(ataquePlayer2);
-			    }
-			    else {
-			    	verificadorPlayer2 = true;
-			    }
-		    } while (verificadorPlayer2);
+		    } while (!Player2.ValidarAtaque(ataquePlayer2));
+		    
+		    Player2.AdicionarAtaqueTotal(ataquePlayer2);
+		    
 		    if(tabuleiro1.ProcessarAtaque(ataquePlayer2)) {
 		    	System.out.println("Player 2: Ataque bem sucedido!");
-		    	pontosPlayer2++;
+		    	Player2.AdicionarPonto();
+		    	Player2.AdicionarAtaqueBemSucedido(ataquePlayer2);
 		    }
 		    else {
 		    	System.out.println("Player 2: Ataque mal sucedido, tente outra posição!");
+		    	Player2.AdicionarAtaqueMalSucedido(ataquePlayer2);
 		    }
+		    System.out.println(rodadas);
+		    fimDeJogo = !(Player1.getPontos() == pontosParaGanhar || Player2.getPontos() == pontosParaGanhar);
 		    
-		    fimDeJogo = !(pontosPlayer1 == pontosParaGanhar || pontosPlayer2 == pontosParaGanhar);
-		    rodadas++;
+
 	    } while(fimDeJogo);
 	    
 	    
@@ -125,26 +117,27 @@ public class Principal {
 	    tabuleiro1.Mostra();
 	    tabuleiro2.Mostra();
 	    
+	    
 	    //Quantidade de rodadas executadas
 	    System.out.print("O jogo foi encerrado em " + rodadas + " rodadas. ");
 	    
 	    //Anúncio do vencedor ou do empate
 	    String vencedor;
-	    if(pontosPlayer1 > pontosPlayer2) {
+	    if(Player1.getPontos() > Player2.getPontos()) {
 	    	System.out.println("Player 1 ganhou!");
-	    	vencedor = "Player 1 - " + AtaquesPlayer1.size() + " ataques realizados";
+	    	vencedor = "Player 1 - " + Player1.getAtaquesTotais().size() + " ataques realizados";
 	    }
-	    else if (pontosPlayer1 == pontosPlayer2) {
+	    else if (Player1.getPontos() == Player2.getPontos()) {
 	    	System.out.println("Empate");
 	    	vencedor = "Empate - " + rodadas + " rodadas foram executadas";
 	    }
 	    else {
 	    	System.out.println("Player 2 ganhou!");
-	    	vencedor = "Player 2 - " + AtaquesPlayer2.size() + " ataques realizados";
+	    	vencedor = "Player 2 - " + Player2.getAtaquesTotais().size() + " ataques realizados";
 	    }
-	    
-	    System.out.println("Ataques realizados pelo Player 1: " + AtaquesPlayer2.size());
-	    System.out.println("Ataques realizados pelo Player 2: " + AtaquesPlayer2.size());
+	    System.out.println("Ataques bem sucedidos: ");
+	    System.out.println("- Player 1: " + Player1.getAtaquesBemSucedidos().size());
+	    System.out.println("- Player 2: " + Player2.getAtaquesBemSucedidos().size());
 	    //Dúvidas / Faltando
 	    // Arquivos
 	    // Contagem de ataques bem sucedidos ou ataques mesmo?
@@ -172,7 +165,7 @@ public class Principal {
 			System.exit(1); //break de interromper o sistema todo, quando não sentido em continaur sem o arquivo
 		}
 		*/
-		
+		/*
 		String arquivoAtaquePlayer1 = "ataquesPlayer1.txt";
 		String arquivoAtaquePlayer2 = "ataquesPlayer2.txt";
 		String arquivoVencedor = "vencedor.txt";
@@ -208,6 +201,7 @@ public class Principal {
 		} 
 		catch (IOException e) {
 			System.out.println("Um erro ocorreu.");
-		}	
+		}
+		*/
 	}
 }

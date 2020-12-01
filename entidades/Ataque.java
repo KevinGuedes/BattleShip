@@ -17,6 +17,8 @@ public class Ataque {
 		Coluna = coluna;
 	}
 	
+	public Ataque() {
+	}
 	
 	public Ataque(int linha, int coluna) {
 		Linha = linha;
