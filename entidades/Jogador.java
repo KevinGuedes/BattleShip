@@ -15,7 +15,6 @@ public class Jogador {
 		AtaquesMalSucedidos = new ArrayList<Ataque>();
 	}
 
-	
 	public int getPontos() {
 		return Pontos;
 	}

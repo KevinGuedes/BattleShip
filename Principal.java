@@ -178,13 +178,13 @@ public class Principal {
 			if(filePlayer1.createNewFile() && filePlayer2.createNewFile() && fileVencedor.createNewFile()) {
 				
 				FileWriter fileWriter1 = new FileWriter(filePlayer1);
-				for(Ataque ataque : AtaquesPlayer1) {
+				for(Ataque ataque : Player1.getAtaquesTotais()) {
 					fileWriter1.write(ataque.Mostra() + "\n");
 				}
 				fileWriter1.close();
 				
 				FileWriter fileWriter2 = new FileWriter(filePlayer2);
-				for(Ataque ataque : AtaquesPlayer2) {
+				for(Ataque ataque : Player2.getAtaquesTotais()) {
 					fileWriter2.write(ataque.Mostra() + "\n");
 				}
 				fileWriter2.close();
