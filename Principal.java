@@ -32,16 +32,27 @@ public class Principal {
 		
 		//Povoando ambos os tabuleiros
 		ArrayList<Navio> navios = new ArrayList<Navio>();
-		navios.add(new Submarino());
-	    navios.add(new Submarino());
-	    navios.add(new Submarino());
-	    navios.add(new Submarino());
-	    navios.add(new Contratorpedeiro());
-	    navios.add(new Contratorpedeiro());
-	    navios.add(new Contratorpedeiro());
-	    navios.add(new NavioTanque());
-	    navios.add(new NavioTanque());
-	    navios.add(new PortaAviao());
+		int submarinos = 4;
+		int contratorperdeiros = 3;
+		int navioTanque = 2;
+		int portaAviao = 1;
+		int i;
+		
+		for(i = 0; i < submarinos; i++) {
+			navios.add(new Submarino());
+		}
+		
+		for(i = 0; i < contratorperdeiros; i++) {
+			navios.add(new Contratorpedeiro());
+		}
+		
+		for(i = 0; i < navioTanque; i++) {
+			 navios.add(new NavioTanque());
+		}
+		
+		for(i = 0; i < portaAviao; i++) {
+			navios.add(new PortaAviao());
+		}
 	    
 	    for(Navio navio : navios) {
 			tabuleiro1.PosicionarNavio(navio);

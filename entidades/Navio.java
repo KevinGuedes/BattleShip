@@ -7,6 +7,7 @@ public abstract class Navio {
 	public int[][] getDimensao() {
 		return Dimensao;
 	}
+	
 	public void setDimensao(int[][] dimensao) {
 		Dimensao = dimensao;
 	}
