@@ -6,16 +6,6 @@ public class Tabuleiro {
 	private int[][] Dimensao;
 	private String Nome;
 	
-	
-	public int[][] getDimensao() {
-		return Dimensao;
-	}
-	
-	public void setDimensao(int[][] dimensao) {
-		Dimensao = dimensao;
-	}
-	
-	
 	public Tabuleiro(String nome, int[][] dimensao) {
 		Nome = nome;
 		Dimensao = dimensao;
@@ -26,7 +16,13 @@ public class Tabuleiro {
 		}
 	}
 	
+	public int[][] getDimensao() {
+		return Dimensao;
+	}
 	
+	public void setDimensao(int[][] dimensao) {
+		Dimensao = dimensao;
+	}
 	
 	public int getLinhas() {
 		return Dimensao.length;
@@ -44,7 +40,7 @@ public class Tabuleiro {
 		Dimensao[linha][coluna] = value;
 	}
 	
-	public void posicionarNavio(Navio navio) {
+	public void PosicionarNavio(Navio navio) {
 		Random random = new Random();
 		int linha;
 		int coluna;
@@ -95,25 +91,26 @@ public class Tabuleiro {
 		
 		
 		if(orientacao == 0) {
-			for(int j = coluna; j < coluna + navio.getComprimentoNavio(); j ++) {
+			for(int j = coluna; j < coluna + navio.getComprimentoNavio(); j++) {
 				Dimensao[linha][j] = 1;
 			};
 		}
 		else {
-			for(int i = linha; i < linha + navio.getComprimentoNavio(); i ++) {
+			for(int i = linha; i < linha + navio.getComprimentoNavio(); i++) {
 				Dimensao[i][coluna] = 1;
 			};
 		}
 		
 	}
 	
+	
 	public boolean ProcessarAtaque(Ataque ataque) {
 		if(getStatus(ataque.getLinha(), ataque.getColuna()) == 1) {
-			UpdateStatus(ataque.getLinha(), ataque.getColuna(), 2);
+			UpdateStatus(ataque.getLinha(), ataque.getColuna(), 2); //Ataque bem sucedido
 			return true;
 		}
 		else {
-			UpdateStatus(ataque.getLinha(), ataque.getColuna(), 3);
+			UpdateStatus(ataque.getLinha(), ataque.getColuna(), 3); //Ataque mal sucedido
 			return false;
 		}
 	}
@@ -142,5 +139,4 @@ public class Tabuleiro {
 		System.out.println();
 		System.out.println();
 	}
-	
 }

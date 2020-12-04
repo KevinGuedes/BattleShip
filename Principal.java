@@ -1,7 +1,6 @@
 import entidades.Tabuleiro;
 import entidades.Submarino;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import entidades.Ataque;
 import entidades.Contratorpedeiro;
 import entidades.Jogador;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Principal {
 
@@ -27,9 +25,10 @@ public class Principal {
 		
 		
 		//Inânciação dos tabuleiros dos dois jogadores
-		
-		Tabuleiro tabuleiro1 = new Tabuleiro("Player 1", new int[linhas][colunas]);
-		Tabuleiro tabuleiro2 = new Tabuleiro("Player 2", new int[linhas][colunas]);
+		int[][] dimensao1 = new int[linhas][colunas];
+		int[][] dimensao2 = new int[linhas][colunas];
+		Tabuleiro tabuleiro1 = new Tabuleiro("Player 1", dimensao1);
+		Tabuleiro tabuleiro2 = new Tabuleiro("Player 2", dimensao2);
 		
 		//Povoando ambos os tabuleiros
 		ArrayList<Navio> navios = new ArrayList<Navio>();
@@ -45,8 +44,8 @@ public class Principal {
 	    navios.add(new PortaAviao());
 	    
 	    for(Navio navio : navios) {
-			tabuleiro1.posicionarNavio(navio);
-			tabuleiro2.posicionarNavio(navio);
+			tabuleiro1.PosicionarNavio(navio);
+			tabuleiro2.PosicionarNavio(navio);
 		}
 	    
 	    System.out.println("Tabuleiros pré jogo");
@@ -117,7 +116,6 @@ public class Principal {
 	    tabuleiro1.Mostra();
 	    tabuleiro2.Mostra();
 	    
-	    
 	    //Quantidade de rodadas executadas
 	    System.out.print("O jogo foi encerrado em " + rodadas + " rodadas. ");
 	    
@@ -138,58 +136,61 @@ public class Principal {
 	    System.out.println("Ataques bem sucedidos: ");
 	    System.out.println("- Player 1: " + Player1.getAtaquesBemSucedidos().size());
 	    System.out.println("- Player 2: " + Player2.getAtaquesBemSucedidos().size());
-	    //Dúvidas / Faltando
-	    // Arquivos
-	    // Contagem de ataques bem sucedidos ou ataques mesmo?
-
-	    
-		
-		
-		/*
-		//Leitura de arquivo
-		String fileName = "teste.txt";//ou endereço completo
-		File file = new File(fileName);
-		//file.
-		//file.getAbsolutePath()
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNext()) {
-				int a = scanner.nextInt();
-				int b = scanner.nextInt();
-				String c = scanner.next();
-				System.out.println(a + " " + b + " " + " " + c);	
-			}
-		}
-		catch (FileNotFoundException e){
-			System.out.println("Arquivo não existe");
-			System.exit(1); //break de interromper o sistema todo, quando não sentido em continaur sem o arquivo
-		}
-		*/
-		/*
-		String arquivoAtaquePlayer1 = "ataquesPlayer1.txt";
-		String arquivoAtaquePlayer2 = "ataquesPlayer2.txt";
-		String arquivoVencedor = "vencedor.txt";
+	
+		String nomeArquivoAtaquePlayer1 = "ataquesPlayer1.txt";
+		String nomeArquivoAtaquePlayer2 = "ataquesPlayer2.txt";
+		String nomeArquivoVencedor = "vencedor.txt";
 		
 		try {
-			File filePlayer1 = new File(arquivoAtaquePlayer1);
-			File filePlayer2 = new File(arquivoAtaquePlayer2);
-			File fileVencedor = new File(arquivoVencedor);
+			File arquivoPlayer1 = new File(nomeArquivoAtaquePlayer1);
+			File arquivoPlayer2 = new File(nomeArquivoAtaquePlayer2);
+			File arquivoVencedor = new File(nomeArquivoVencedor);
 			
-			if(filePlayer1.createNewFile() && filePlayer2.createNewFile() && fileVencedor.createNewFile()) {
+			if(arquivoPlayer1.createNewFile() && arquivoPlayer2.createNewFile() && arquivoVencedor.createNewFile()) {
 				
-				FileWriter fileWriter1 = new FileWriter(filePlayer1);
+				FileWriter fileWriter1 = new FileWriter(arquivoPlayer1);
+				fileWriter1.write("Ataques Totais\n");
 				for(Ataque ataque : Player1.getAtaquesTotais()) {
 					fileWriter1.write(ataque.Mostra() + "\n");
 				}
+				
+				fileWriter1.write("\n\n");
+				fileWriter1.write("Ataques Bem Sucedidos\n");
+				for(Ataque ataque : Player1.getAtaquesBemSucedidos()) {
+					fileWriter1.write(ataque.Mostra() + "\n");
+				}
+				
+				fileWriter1.write("\n\n");
+				fileWriter1.write("Ataques Mal Sucedidos\n");
+				for(Ataque ataque : Player1.getAtaquesMalSucedidos()) {
+					fileWriter1.write(ataque.Mostra() + "\n");
+				}
+				
 				fileWriter1.close();
 				
-				FileWriter fileWriter2 = new FileWriter(filePlayer2);
+				
+				FileWriter fileWriter2 = new FileWriter(arquivoPlayer2);
+				fileWriter2.write("Ataques Totais\n");
 				for(Ataque ataque : Player2.getAtaquesTotais()) {
 					fileWriter2.write(ataque.Mostra() + "\n");
 				}
+				
+				fileWriter2.write("\n\n");
+				fileWriter2.write("Ataques Bem Sucedidos\n");
+				for(Ataque ataque : Player2.getAtaquesBemSucedidos()) {
+					fileWriter2.write(ataque.Mostra() + "\n");
+				}
+				
+				fileWriter2.write("\n\n");
+				fileWriter2.write("Ataques Mal Sucedidos\n");
+				for(Ataque ataque : Player2.getAtaquesMalSucedidos()) {
+					fileWriter2.write(ataque.Mostra() + "\n");
+				}
+		
 				fileWriter2.close();
 				
-				FileWriter fileWriterVencedor = new FileWriter(fileVencedor);
+				
+				FileWriter fileWriterVencedor = new FileWriter(arquivoVencedor);
 				fileWriterVencedor.write(vencedor);
 				fileWriterVencedor.close();
 				
@@ -201,7 +202,8 @@ public class Principal {
 		} 
 		catch (IOException e) {
 			System.out.println("Um erro ocorreu.");
+			System.out.println(e.getMessage());
 		}
-		*/
+		
 	}
 }

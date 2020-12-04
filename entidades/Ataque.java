@@ -7,17 +7,17 @@ public class Ataque {
 	public int getLinha() {
 		return Linha;
 	}
+	
 	public void setLinha(int linha) {
 		Linha = linha;
 	}
+	
 	public int getColuna() {
 		return Coluna;
 	}
+	
 	public void setColuna(int coluna) {
 		Coluna = coluna;
-	}
-	
-	public Ataque() {
 	}
 	
 	public Ataque(int linha, int coluna) {
@@ -26,7 +26,7 @@ public class Ataque {
 	}
 	
 	public String Mostra() {
-		return "Ataque: L" + Linha + "-C" + Coluna;
+		return "Ataque: L" + Linha + " - C" + Coluna;
 	}
 	
 	@Override
@@ -41,10 +41,11 @@ public class Ataque {
 
 	    return isEqual;
 	}
-
+	
+	/*
 	@Override
 	public int hashCode() {
 	    return this.Linha + this.Coluna;
 	}
-	
+	*/
 }

@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 public class Jogador {
 
-	int Pontos;
-	ArrayList<Ataque> AtaquesTotais;
-	ArrayList<Ataque> AtaquesBemSucedidos;
-	ArrayList<Ataque> AtaquesMalSucedidos;
+	private int Pontos;
+	private ArrayList<Ataque> AtaquesTotais;
+	private ArrayList<Ataque> AtaquesBemSucedidos;
+	private ArrayList<Ataque> AtaquesMalSucedidos;
 	
 	public Jogador() {
 		Pontos = 0;
